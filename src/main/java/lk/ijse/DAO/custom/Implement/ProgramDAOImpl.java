@@ -1,34 +1,61 @@
 package lk.ijse.DAO.custom.Implement;
 
 import lk.ijse.DAO.custom.ProgramsDAO;
-import lk.ijse.dto.ProgramsDTO;
+import lk.ijse.config.FactoryConfiguration;
+import lk.ijse.entity.Programs;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class ProgramDAOImpl implements ProgramsDAO {
     @Override
-    public boolean add(ProgramsDTO entity) throws Exception {
-        return false;
+    public boolean add(Programs entity) throws Exception {
+        try (Session session = FactoryConfiguration.getInstance().getSession()){
+            Transaction transaction = session.beginTransaction();
+            session.save(entity);
+            transaction.commit();
+            return true;
+        }
     }
 
     @Override
-    public boolean update(ProgramsDTO entity) throws Exception {
-        return false;
+    public boolean update(Programs entity) throws Exception {
+       try (Session session = FactoryConfiguration.getInstance().getSession()){
+           Transaction transaction = session.beginTransaction();
+           session.update(entity);
+           transaction.commit();
+           return true;
+       }
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        return false;
+        try (Session session = FactoryConfiguration.getInstance().getSession()){
+            Transaction transaction = session.beginTransaction();
+            Programs programs = session.get(Programs.class, id);
+
+            if (programs != null) {
+                session.delete(programs);
+                transaction.commit();
+                return true;
+            }
+            return false;
+        }
     }
 
     @Override
-    public ProgramsDTO search(String id) throws Exception {
-        return null;
+    public Programs search(String id) throws Exception {
+        try (Session session = FactoryConfiguration.getInstance().getSession()){
+            return session.get(Programs.class, id);
+        }
     }
 
     @Override
-    public List<ProgramsDTO> getAll() throws Exception {
-        return null;
+    public List<Programs> getAll() throws Exception {
+        try (Session session = FactoryConfiguration.getInstance().getSession()){
+            return session.createQuery("FROM Programs", Programs.class).list();
+        }
     }
 
     @Override

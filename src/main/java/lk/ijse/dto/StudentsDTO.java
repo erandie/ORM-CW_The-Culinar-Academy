@@ -1,7 +1,6 @@
 package lk.ijse.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class StudentsDTO implements Serializable {
@@ -11,16 +10,19 @@ public class StudentsDTO implements Serializable {
     private String stContact;
     private Date registrationDate;
 
-    public StudentsDTO(String student_id, String student_name, String student_address, String st_contact, String st_date) {
-
-    }
-
     public StudentsDTO(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
         this.stID = stID;
         this.stFullName = stFullName;
         this.stAddress = stAddress;
         this.stContact = stContact;
         this.registrationDate = registrationDate;
+    }
+
+    // Getters and Setters
+    // ...
+
+    public StudentsDTO() {
+
     }
 
     public String getStID() {
