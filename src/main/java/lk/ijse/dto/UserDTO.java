@@ -1,4 +1,4 @@
-package lk.ijse.models;
+package lk.ijse.dto;
 
 public class UserDTO {
     private Long userID;

@@ -11,31 +11,33 @@ public class Students {
 
     @Id
     private String stID;
-    private String stFullName;
-    private String stAddress;
-    private String stContact;
-    private Date registrationDate;
-    private String programID;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "Student_programs",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "program_id")
-    )
-
-    private Set<Programs> programs = new HashSet<>();
 
     public Students() {
     }
 
-    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String programID, Set<Programs> programs) {
+    private String stFullName;
+    private String stAddress;
+    private String stContact;
+    private Date registrationDate;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Student_programs",
+            joinColumns = @JoinColumn(name = "stID"),
+            inverseJoinColumns = @JoinColumn(name = "programID")
+    )
+
+    private Set<Programs> programs = new HashSet<>();
+
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
+    }
+
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, Set<Programs> programs) {
         this.stID = stID;
         this.stFullName = stFullName;
         this.stAddress = stAddress;
         this.stContact = stContact;
         this.registrationDate = registrationDate;
-        this.programID = programID;
         this.programs = programs;
     }
 
@@ -79,14 +81,6 @@ public class Students {
         this.registrationDate = registrationDate;
     }
 
-    public String getProgramID() {
-        return programID;
-    }
-
-    public void setProgramID(String programID) {
-        this.programID = programID;
-    }
-
     public Set<Programs> getPrograms() {
         return programs;
     }
@@ -103,7 +97,6 @@ public class Students {
                 ", stAddress='" + stAddress + '\'' +
                 ", stContact='" + stContact + '\'' +
                 ", registrationDate=" + registrationDate +
-                ", programID='" + programID + '\'' +
                 ", programs=" + programs +
                 '}';
     }

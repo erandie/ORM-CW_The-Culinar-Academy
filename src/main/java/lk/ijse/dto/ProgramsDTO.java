@@ -1,4 +1,4 @@
-package lk.ijse.models;
+package lk.ijse.dto;
 
 import java.io.Serializable;
 
