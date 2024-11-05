@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.PaymentController">
+   <children>
+      <ComboBox fx:id="cmb_student_id" layoutX="48.0" layoutY="61.0" onAction="#load_student" prefWidth="150.0" promptText="Student ID" />
+      <TextField fx:id="txt_student_name" layoutX="240.0" layoutY="61.0" promptText="Student Name" />
+      <ComboBox fx:id="cmb_progrm_id" layoutX="48.0" layoutY="111.0" onAction="#load_program" prefWidth="150.0" promptText="Program ID" />
+      <TextField fx:id="txt_prgrm_name" layoutX="240.0" layoutY="111.0" promptText="Program Name" />
+      <TextField fx:id="txt_amount" layoutX="423.0" layoutY="49.0" prefHeight="24.0" prefWidth="150.0" promptText="Amount" />
+      <TextField fx:id="txt_paid_amount" layoutX="48.0" layoutY="163.0" prefHeight="24.0" prefWidth="150.0" promptText="Paid Amount" />
+      <TextField fx:id="txt_full_payment" layoutX="240.0" layoutY="163.0" prefHeight="24.0" prefWidth="171.0" promptText="Full Payment" />
+      <TextField fx:id="txt_pay_date" layoutX="436.0" layoutY="163.0" prefHeight="24.0" prefWidth="150.0" promptText="Pay Date" />
+      <TextField fx:id="txt_balance" layoutX="436.0" layoutY="111.0" prefHeight="24.0" prefWidth="150.0" promptText="Balance" />
+      <Label layoutX="223.0" layoutY="14.0" text="Payment">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txt_payment_id" layoutX="52.0" layoutY="228.0" promptText="Payment ID" />
+   </children>
+</AnchorPane>
