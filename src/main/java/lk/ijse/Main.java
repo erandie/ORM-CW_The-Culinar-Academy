@@ -6,12 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lk.ijse.entity.Programs;
+import lk.ijse.entity.Students;
+
+import java.util.Date;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/User.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"));
         primaryStage.setTitle("The Culinary Academy");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

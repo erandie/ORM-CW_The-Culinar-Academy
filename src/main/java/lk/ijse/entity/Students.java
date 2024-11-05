@@ -21,7 +21,21 @@ public class Students {
             joinColumns = @JoinColumn(name = "stID"),
             inverseJoinColumns = @JoinColumn(name = "programID")
     )
+
     private Set<Programs> programs = new HashSet<>();
+
+    @OneToMany(mappedBy = "students", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Payments> payments = new HashSet<>();
+
+    public Set<Payments> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payments> payments) {
+        this.payments = payments;
+    }
+
+
 
     public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
         this.stID = stID;

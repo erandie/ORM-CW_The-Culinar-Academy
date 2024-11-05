@@ -7,29 +7,39 @@ import java.util.Set;
 
 @Entity
 public class Programs {
-
     @Id
     private String programID;
     private String prName;
     private String duration;
     private Double prFee;
 
-    @ManyToMany(mappedBy = "programs",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "programs", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Students> students = new HashSet<>();
 
-    public Programs(String programID, String prName, String duration, Double prFee) {
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "programID")
+    private Payments payments;
+
+    public Programs() {
     }
 
-    public Programs(String programID, String prName, String duration, Double prFee, Set<Students> students) {
+    public Programs(String programID, String prName, String duration, Double prFee) {
         this.programID = programID;
         this.prName = prName;
         this.duration = duration;
         this.prFee = prFee;
-        this.students = students;
     }
 
-    public Programs() {
-
+    @Override
+    public String toString() {
+        return "Programs{" +
+                "programID='" + programID + '\'' +
+                ", prName='" + prName + '\'' +
+                ", duration='" + duration + '\'' +
+                ", prFee=" + prFee +
+                ", students=" + students +
+                ", payments=" + payments +
+                '}';
     }
 
     public String getProgramID() {
@@ -72,14 +82,12 @@ public class Programs {
         this.students = students;
     }
 
-    @Override
-    public String toString() {
-        return "Programs{" +
-                "programID='" + programID + '\'' +
-                ", prName='" + prName + '\'' +
-                ", duration='" + duration + '\'' +
-                ", prFee=" + prFee +
-                ", students=" + students +
-                '}';
+    public Payments getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Payments payments) {
+        this.payments = payments;
     }
 }
+

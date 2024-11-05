@@ -23,6 +23,9 @@ public class DashboardController {
     @FXML
     private Button btn_user;
 
+    @FXML
+    private AnchorPane child_root;
+
 //    @FXML
 //    private void initialize() {
         // You can initialize any necessary data or set up event handlers here
@@ -44,32 +47,34 @@ public class DashboardController {
     }
 
     @FXML
-    private void handleStudentButtonClick(ActionEvent event) {
+    void handleStudentButtonClick(ActionEvent event) {
+        child_root.getChildren().clear();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Students.fxml"));
-            Parent root = loader.load();
-            mainPane.getChildren().setAll(root);
-        } catch (Exception e) {
-            e.printStackTrace(); // Log the exception
-            // Optionally show an error dialog
-        }
-    }
-
-
-    @FXML
-    private void handleProgramButtonClick() {
-        loadFXML("/view/program.fxml"); // Replace with the actual path of your program FXML
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Students.fxml")));
+        } catch (IOException e) {}
     }
 
     @FXML
-    private void handlePaymentButtonClick() {
-        loadFXML("/view/payment.fxml"); // Replace with the actual path of your payment FXML
+    void handleProgramButtonClick(ActionEvent event) {
+        child_root.getChildren().clear();
+        try {
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Programs.fxml")));
+        } catch (IOException e) {}
     }
 
     @FXML
-    private void handleUserButtonClick() {
-        loadFXML("/view/user.fxml"); // Replace with the actual path of your user FXML
+    void handlePaymentButtonClick(ActionEvent event) {
+        child_root.getChildren().clear();
+        try {
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Payment.fxml")));
+        } catch (IOException e) {}
     }
 
-
+    @FXML
+    void handleUserButtonClick(ActionEvent event) {
+        child_root.getChildren().clear();
+        try {
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/User.fxml")));
+        } catch (IOException e) {}
+    }
 }
