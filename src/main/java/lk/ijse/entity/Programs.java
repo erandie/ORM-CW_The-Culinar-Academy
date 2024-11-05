@@ -17,7 +17,7 @@ public class Programs {
     @ManyToMany(mappedBy = "programs",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Students> students = new HashSet<>();
 
-    public Programs() {
+    public Programs(String programID, String prName, String duration, Double prFee) {
     }
 
     public Programs(String programID, String prName, String duration, Double prFee, Set<Students> students) {
@@ -26,6 +26,10 @@ public class Programs {
         this.duration = duration;
         this.prFee = prFee;
         this.students = students;
+    }
+
+    public Programs() {
+
     }
 
     public String getProgramID() {

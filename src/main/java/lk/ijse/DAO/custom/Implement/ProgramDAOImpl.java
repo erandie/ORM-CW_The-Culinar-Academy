@@ -11,22 +11,28 @@ import java.util.List;
 public class ProgramDAOImpl implements ProgramsDAO {
     @Override
     public boolean add(Programs entity) throws Exception {
-        try (Session session = FactoryConfiguration.getInstance().getSession()){
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
             return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
     @Override
     public boolean update(Programs entity) throws Exception {
-       try (Session session = FactoryConfiguration.getInstance().getSession()){
-           Transaction transaction = session.beginTransaction();
-           session.update(entity);
-           transaction.commit();
-           return true;
-       }
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
