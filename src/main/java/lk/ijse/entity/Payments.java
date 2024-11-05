@@ -21,7 +21,7 @@ public class Payments {
     @OneToOne(mappedBy = "payments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Programs programs;
 
-    public Payments() {
+    public Payments(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
     }
 
     public Payments(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount, Students students, Programs programs) {
@@ -34,6 +34,9 @@ public class Payments {
         this.programs = programs;
     }
 
+    public Payments() {
+
+    }
 
 
     @Override
