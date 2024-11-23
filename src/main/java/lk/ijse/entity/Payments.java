@@ -1,14 +1,17 @@
 package lk.ijse.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "Payments")
 public class Payments {
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String paymentID;
-
     private LocalDate paymentDate;
     private Double amount;
     private Double balance;

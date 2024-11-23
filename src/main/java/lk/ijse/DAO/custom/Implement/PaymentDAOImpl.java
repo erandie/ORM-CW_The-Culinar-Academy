@@ -7,12 +7,18 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.UUID;
 
- public class PaymentDAOImpl implements PaymentDAO {
+public class PaymentDAOImpl implements PaymentDAO {
         @Override
         public boolean add(Payments entity) throws Exception {
+
+            entity.setPaymentID(UUID.randomUUID().toString());
+
+            Transaction transaction = null;
+
             try (Session session = FactoryConfiguration.getInstance().getSession()){
-                Transaction transaction = session.beginTransaction();
+                transaction = session.beginTransaction();
                 session.save(entity);
                 transaction.commit();
                 return true;

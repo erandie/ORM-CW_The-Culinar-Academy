@@ -4,24 +4,22 @@ import jakarta.persistence.*;
 import lk.ijse.entity.Programs;
 import lk.ijse.entity.Students;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
-public class PaymentDTO {
-    @Id
+public class PaymentDTO implements Serializable {
     private String paymentID;
-
     private LocalDate paymentDate;
     private Double amount;
     private Double balance;
     private Double paidAmount;
 
-    @ManyToOne
-    @JoinColumn(name = "stID")
-    private Students students;
-
-    @OneToOne(mappedBy = "payments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Programs programs;
+//    @ManyToOne
+//    @JoinColumn(name = "stID")
+//    private Students students;
+//
+//    @OneToOne(mappedBy = "payments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Programs programs;
 
     public PaymentDTO(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
     }
@@ -32,8 +30,8 @@ public class PaymentDTO {
         this.amount = amount;
         this.balance = balance;
         this.paidAmount = paidAmount;
-        this.students = students;
-        this.programs = programs;
+//        this.students = students;
+//        this.programs = programs;
     }
 
     public PaymentDTO() {
@@ -49,8 +47,8 @@ public class PaymentDTO {
                 ", amount=" + amount +
                 ", balance=" + balance +
                 ", paidAmount=" + paidAmount +
-                ", students=" + students +
-                ", programs=" + programs +
+//                ", students=" + students +
+//                ", programs=" + programs +
                 '}';
     }
 
@@ -94,20 +92,20 @@ public class PaymentDTO {
         this.paidAmount = paidAmount;
     }
 
-    public Students getStudents() {
-        return students;
-    }
-
-    public void setStudents(Students students) {
-        this.students = students;
-    }
-
-    public Programs getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(Programs programs) {
-        this.programs = programs;
-    }
+//    public Students getStudents() {
+//        return students;
+//    }
+//
+//    public void setStudents(Students students) {
+//        this.students = students;
+//    }
+//
+//    public Programs getPrograms() {
+//        return programs;
+//    }
+//
+//    public void setPrograms(Programs programs) {
+//        this.programs = programs;
+//    }
 }
 
