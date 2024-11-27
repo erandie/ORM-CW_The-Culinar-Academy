@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="801.0" prefWidth="963.0" style="-fx-background-color: white;" stylesheets="@../../../../../../../../AandCSuperMArket/src/main/resources/style/newCustomer_form.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.PaymentController">
+   <children>
+      <TextField fx:id="txtSearch" layoutX="710.0" layoutY="98.0" onAction="#search" opacity="0.8" prefHeight="31.0" prefWidth="167.0" promptText="Search" />
+      <JFXTextField fx:id="txt_payment_id" labelFloat="false" layoutX="132.0" layoutY="147.0" prefHeight="41.0" prefWidth="717.0" promptText="Student ID:" text="Payment Id" unFocusColor="BLACK" />
+      <ImageView fitHeight="31.0" fitWidth="39.0" layoutX="838.0" layoutY="98.0">
+         <image>
+            <Image url="@../../../../../../../../AandCSuperMArket/src/main/resources/Icon/free-search-icon-2911-thumb.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btn_delete" layoutX="542.0" layoutY="485.0" onAction="#delete" prefWidth="119.0" text="Delete" textFill="#464343" />
+      <TableView fx:id="tbl_payment" layoutX="105.0" layoutY="535.0" opacity="0.8" prefHeight="232.0" prefWidth="772.0">
+         <columns>
+            <TableColumn fx:id="col_payment_id" prefWidth="95.0" text="Payment ID" />
+            <TableColumn fx:id="col_student_id" prefWidth="106.0" text="Student ID" />
+            <TableColumn fx:id="col_program_id" prefWidth="115.0" text="Program ID" />
+            <TableColumn fx:id="col_course_fee" prefWidth="128.0" text="Course Fee" />
+            <TableColumn fx:id="clm_paid_amount" prefWidth="123.0" text="Paid Amount" />
+            <TableColumn fx:id="clm_balance" prefWidth="123.0" text="Balance" />
+            <TableColumn fx:id="clm_date" prefWidth="81.0" text="Date" />
+         </columns>
+      </TableView>
+      <JFXTextField fx:id="txt_student_name" labelFloat="false" layoutX="531.0" layoutY="216.0" onKeyReleased="#txtCustomerNAmeOnKeyReleased" prefHeight="41.0" prefWidth="322.0" promptText="Student Name:" text="Student Name" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txt_prgrm_name" labelFloat="false" layoutX="527.0" layoutY="283.0" prefHeight="41.0" prefWidth="322.0" promptText="Program Name:" text="Program Name:" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txt_paid_amount" labelFloat="false" layoutX="527.0" layoutY="353.0" onKeyReleased="#txtCustomerContactOnKeyReleased" prefHeight="41.0" prefWidth="322.0" promptText="Paid Amount:" text="Paid Amount:" unFocusColor="BLACK" />
+      <JFXButton fx:id="btn_updateBalance" buttonType="RAISED" layoutX="127.0" layoutY="422.0" onAction="#updateBalance" prefHeight="41.0" prefWidth="322.0" text="Update Balance" />
+      <JFXButton fx:id="btnAddNew" layoutX="617.0" layoutY="102.0" onAction="#btnAddNew_OnAction" text="+AddNew" />
+      <Label layoutX="429.0" layoutY="49.0" text="Payment">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="txt_pay_date" layoutX="526.0" layoutY="422.0" prefHeight="41.0" prefWidth="322.0" promptText="Date" />
+      <JFXComboBox fx:id="cmb_student_id" layoutX="132.0" layoutY="216.0" onAction="#load_student" prefHeight="41.0" prefWidth="322.0" promptText="Student ID:" />
+      <JFXComboBox fx:id="cmb_progrm_id" layoutX="132.0" layoutY="283.0" onAction="#load_program" prefHeight="41.0" prefWidth="322.0" promptText="Program ID:" />
+      <JFXTextField fx:id="txt_amount" labelFloat="false" layoutX="127.0" layoutY="353.0" onKeyReleased="#txtCustomerContactOnKeyReleased" prefHeight="41.0" prefWidth="322.0" promptText="Full Amount:" text="Course Fee:" unFocusColor="BLACK" />
+      <JFXButton fx:id="btn_save" buttonType="RAISED" layoutX="379.0" layoutY="494.0" onAction="#save" prefHeight="24.0" prefWidth="119.0" text="Save" />
+   </children>
+</AnchorPane>

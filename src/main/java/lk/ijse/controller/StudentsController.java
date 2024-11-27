@@ -11,10 +11,8 @@ import javafx.scene.input.KeyEvent;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.StudentBO;
 import lk.ijse.dto.StudentsDTO;
-import lk.ijse.entity.Students;
 
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.*;
 
 public class StudentsController {
@@ -220,23 +218,29 @@ public class StudentsController {
 
     private String generateNewId() {
         try {
-            return studentBO.generateNew_StudentID();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "failed to generate a new id!!").show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            // Try getting the next ID from the database or your business logic.
+            String lastId = studentBO.generateNew_StudentID();
+            System.out.println("Last ID fetched from DB: " + lastId);  // Print the last ID
 
-        if (tbl_stdnts.getItems().isEmpty()) {
-            return "S001";
-        } else {
-            String sId = getLastStudentID();
-            int newStudentID = Integer.parseInt(sId.replace("S", "")) + 1;
-            return String.format("S00-%03d", newStudentID);
+            // If we get a null or empty ID, we start from "S001"
+            if (lastId == null || lastId.isEmpty()) {
+                return "S001";
+            }
+
+            // If we have a valid last ID, let's parse it and increment by 1
+            int idNumber = Integer.parseInt(lastId.replace("S", "").replace("-", "")); // Remove "S" and "-" to get the number
+            idNumber++; // Increment the number
+
+            // Return the new ID in the required format (e.g., S001, S002, etc.)
+            return String.format("S%03d", idNumber); // Ensure the ID is always 3 digits
+        } catch (Exception e) {
+            // Handle any errors during the ID generation
+            e.printStackTrace();
+            return "S001"; // Fallback ID in case of an error
         }
     }
+
+
 
     private String getLastStudentID() {
         List<StudentsDTO> tempStudentList = new ArrayList<>(tbl_stdnts.getItems());

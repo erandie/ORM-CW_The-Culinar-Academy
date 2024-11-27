@@ -9,6 +9,7 @@ import java.util.Set;
 public class Students {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String stID;
     private String stFullName;
     private String stAddress;
@@ -17,9 +18,8 @@ public class Students {
     private String position;
 
 
-
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "name", nullable = false)
     private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -45,8 +45,6 @@ public class Students {
     public void setPosition(String position) {
         this.position = position;
     }
-
-
 
     public User getUser() {
         return user;

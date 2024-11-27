@@ -61,8 +61,8 @@ public class UserController {
         txt_U_Name.setDisable(true);
         txt_password.setDisable(true);
         txt_position.setDisable(true);
-        btn_save.setDisable(true);
-        btn_delete.setDisable(true);
+        btn_save.setDisable(false);
+        btn_delete.setDisable(false);
     }
 
     private void populateFields(UserDTO user) {
@@ -154,7 +154,7 @@ public class UserController {
 
     public void search() throws Exception {
         try {
-            UserDTO userDTO = userBO.searchUser(txt_id.getText());
+            UserDTO userDTO = userBO.searchUser(txt_Search.getText());
             if (userDTO != null) {
                 populateFields(userDTO);
             } else {
@@ -164,6 +164,7 @@ public class UserController {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error Searching User").show();
         }
+        txt_Search.clear();
     }
 
     public void getAll() throws Exception {

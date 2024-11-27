@@ -54,7 +54,7 @@ public class ProgramBOImpl implements ProgramBO {
 
     @Override
     public ProgramsDTO searchProgram(String id) throws Exception {
-        Programs programs = programsDAO.search(id);
+        Programs programs = programsDAO.search(id);  // DAO search method call
         if (programs != null) {
             return new ProgramsDTO(
                     programs.getProgramID(),
@@ -63,6 +63,7 @@ public class ProgramBOImpl implements ProgramBO {
                     programs.getPrFee()
             );
         }
+        // Returning null if not found
         return null;
     }
 

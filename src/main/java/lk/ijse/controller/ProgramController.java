@@ -27,7 +27,7 @@ public class ProgramController {
     private TableView<ProgramsDTO> tbl_prgrms;
 
     @FXML
-    private TextField txt_drtion, txt_fee, txt_id, txt_name;
+    private TextField txt_drtion, txt_fee, txt_id, txt_name, txtSearch;
 
     @FXML
     private TableColumn<ProgramsDTO, String> col_pr_duration;
@@ -73,8 +73,8 @@ public class ProgramController {
         txt_name.setDisable(true);
         txt_drtion.setDisable(true);
         txt_fee.setDisable(true);
-        btn_save.setDisable(true);
-        btn_delete.setDisable(true);
+        btn_save.setDisable(false);
+        btn_delete.setDisable(false);
     }
 
     private void populateFields(ProgramsDTO programs) {
@@ -239,7 +239,8 @@ public class ProgramController {
 
     public void search() {
         try {
-            ProgramsDTO programs = programBO.searchProgram(txt_id.getText());
+            String programId = txtSearch.getText();
+            ProgramsDTO programs = programBO.searchProgram(programId);
             if (programs != null) {
                 populateFields(programs);
             } else {
@@ -249,7 +250,9 @@ public class ProgramController {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error Searching Program!").show();
         }
+        txtSearch.clear();
     }
+
 
     public void btnAdd_OnAction(ActionEvent actionEvent) {
 

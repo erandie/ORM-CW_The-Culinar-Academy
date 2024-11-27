@@ -53,10 +53,12 @@ public class ProgramDAOImpl implements ProgramsDAO {
 
     @Override
     public Programs search(String id) throws Exception {
-        try (Session session = FactoryConfiguration.getInstance().getSession()){
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            // Returning the Program entity by searching with the program ID
             return session.get(Programs.class, id);
         }
     }
+
 
     @Override
     public List<Programs> getAll() throws Exception {
