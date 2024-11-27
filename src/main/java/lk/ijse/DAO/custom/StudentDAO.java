@@ -5,6 +5,4 @@ import lk.ijse.entity.Students;
 
 public interface StudentDAO extends CrudDAO<Students> {
 
-    
-
 }

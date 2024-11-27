@@ -1,14 +1,10 @@
 package lk.ijse.BO.custom.Implement;
 
-import lk.ijse.BO.SuperBO;
 import lk.ijse.BO.custom.PaymentBO;
 import lk.ijse.DAO.DAOFactory;
 import lk.ijse.DAO.custom.PaymentDAO;
-import lk.ijse.DAO.custom.StudentDAO;
 import lk.ijse.dto.PaymentDTO;
-import lk.ijse.dto.StudentsDTO;
 import lk.ijse.entity.Payments;
-import lk.ijse.entity.Students;
 
 import java.util.ArrayList;
 import java.util.List;

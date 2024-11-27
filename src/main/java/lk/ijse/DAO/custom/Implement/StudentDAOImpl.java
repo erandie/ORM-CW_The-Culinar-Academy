@@ -72,19 +72,18 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public String generateNewID() throws Exception {
-//        try (Session session = FactoryConfiguration.getInstance().getSession()) {
-//            Transaction transaction = session.beginTransaction();
-//            String lastID = (String) session.createQuery("SELECT MAX(stID) FROM Students").uniqueResult();
-//            transaction.commit();
-//
-//            if (lastID != null) {
-//                int newID = Integer.parseInt(lastID.replace("S", "")) + 1;
-//                return String.format("S%03d", newID);
-//            } else {
-//                return "S001"; // Default ID if no students exist
-//            }
-//        }
-        return null;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            String lastID = (String) session.createQuery("SELECT MAX(stID) FROM Students").uniqueResult();
+            transaction.commit();
+
+            if (lastID != null) {
+                int newID = Integer.parseInt(lastID.replace("S", "")) + 1;
+                return String.format("S%03d", newID);
+            } else {
+                return "S001"; // Default ID if no students exist
+            }
+        }
 
     }
 

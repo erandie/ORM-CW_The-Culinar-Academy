@@ -29,7 +29,7 @@ public class DashboardController {
 
     private void loadFXML(String s) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Students-2.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Students.fxml"));
             Parent root = loader.load();
             mainPane.getChildren().setAll(root);
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class DashboardController {
     void handleStudentButtonClick(ActionEvent event) {
         child_root.getChildren().clear();
         try {
-            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Students-2.fxml")));
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Students.fxml")));
         } catch (IOException e) {}
     }
 

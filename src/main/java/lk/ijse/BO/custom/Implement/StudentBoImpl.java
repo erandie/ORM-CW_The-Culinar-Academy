@@ -3,8 +3,9 @@ package lk.ijse.BO.custom.Implement;
 import lk.ijse.BO.custom.StudentBO;
 import lk.ijse.DAO.DAOFactory;
 import lk.ijse.DAO.custom.StudentDAO;
-import lk.ijse.entity.Students;
 import lk.ijse.dto.StudentsDTO;
+import lk.ijse.entity.Students;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class StudentBoImpl implements StudentBO {
                     student.getStFullName(),
                     student.getStAddress(),
                     student.getStContact(),
-                    student.getRegistrationDate(),
-                    student.getPosition()));
+                    student.getRegistrationDate()
+            ));
         }
         return allStudents;
     }
@@ -65,8 +66,7 @@ public class StudentBoImpl implements StudentBO {
                     student.getStFullName(),
                     student.getStAddress(),
                     student.getStContact(),
-                    student.getRegistrationDate(),
-                    student.getPosition()
+                    student.getRegistrationDate()
             );
         }
         return null;

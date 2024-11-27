@@ -102,7 +102,7 @@ public class PaymentController {
 
         List<Students> studentsList = studentDAOImpl.getAll();
         for (Students students : studentsList) {
-            cmb_student_id.getItems().add(students.getStID());
+            cmb_student_id.getItems().add(String.valueOf(students.getStID()));
         }
     }
 

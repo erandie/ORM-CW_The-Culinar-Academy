@@ -121,7 +121,7 @@ public class ProgramController {
 
         if (btn_save.getText().equalsIgnoreCase("Save")) {
             try {
-                if (exitStudent(pId)) {
+                if (exitProgram(pId)) {
                     new Alert(Alert.AlertType.ERROR, pId + " already exists!").show();
                     return;
                 }
@@ -137,7 +137,7 @@ public class ProgramController {
             }
         } else {
             try {
-                if (!exitStudent(pId)) {
+                if (!exitProgram(pId)) {
                     new Alert(Alert.AlertType.ERROR, "Can't find the ID " + pId + "! Enter another one!").show();
                     return;
                 }
@@ -160,7 +160,7 @@ public class ProgramController {
         btnAddNew.fire();
     }
 
-    private boolean exitStudent(String pId) throws Exception {
+    private boolean exitProgram(String pId) throws Exception {
         return programBO.existProgram(pId);
     }
 
@@ -205,7 +205,7 @@ public class ProgramController {
             return "P001";
         } else {
             String sId = getLastProgrmID();
-            int newProgrmID = Integer.parseInt(sId.replace("S", "")) + 1;
+            int newProgrmID = Integer.parseInt(sId.replace("P", "")) + 1;
             return String.format("P00-%03d", newProgrmID);
         }
     }

@@ -1,10 +1,11 @@
+
+
 package lk.ijse.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class StudentsDTO implements Serializable
-{
+public class StudentsDTO_02 implements Serializable {
     private String stID;
     private String stFullName;
     private String stAddress;
@@ -12,29 +13,20 @@ public class StudentsDTO implements Serializable
     private Date registrationDate;
     private String position;
 
-    @Override
-    public String toString() {
-        return "StudentsDTO{" +
-                "position='" + position + '\'' +
-                '}';
+    public StudentsDTO_02(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {
+        this.stID = stID;
+        this.stFullName = stFullName;
+        this.stAddress = stAddress;
+        this.stContact = stContact;
+        this.registrationDate = registrationDate;
+        this.position = this.position;
     }
 
-    public String getPosition() {
-        return position;
+    public StudentsDTO_02(StudentsDTO_02 newStudent) {
+
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public StudentsDTO(String position, String name, String address, String contact, Date date, String s) {
-        this.position = position;
-    }
-//    public StudentDTO_02() {
-//    }
-
-
-    public StudentsDTO(Long stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
+    public StudentsDTO_02() {
     }
 
     public String getStID() {
@@ -77,11 +69,22 @@ public class StudentsDTO implements Serializable
         this.registrationDate = registrationDate;
     }
 
-    public StudentsDTO(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
-        this.stID = stID;
-        this.stFullName = stFullName;
-        this.stAddress = stAddress;
-        this.stContact = stContact;
-        this.registrationDate = registrationDate;
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentsDTO{" +
+                "stID='" + stID + '\'' +
+                ", stFullName='" + stFullName + '\'' +
+                ", stAddress='" + stAddress + '\'' +
+                ", stContact='" + stContact + '\'' +
+                ", registrationDate=" + registrationDate +
+                '}';
     }
 }

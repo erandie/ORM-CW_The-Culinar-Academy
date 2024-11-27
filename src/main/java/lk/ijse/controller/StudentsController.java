@@ -83,6 +83,40 @@ public class StudentsController {
         btn_save.setDisable(false);
     }
 
+    private String generateNewId() {
+        try {
+            return studentBO.generateNew_StudentID();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "failed to generate a new id!!").show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (tbl_stdnts.getItems().isEmpty()) {
+            return "S001";
+        } else {
+            String sId = getLastStudentID();
+            int newStudentID = Integer.parseInt(sId.replace("S", "")) + 1;
+            return String.format("S00-%03d", newStudentID);
+        }
+    }
+
+
+
+    private String getLastStudentID() {
+        List<StudentsDTO> tempStudentList = new ArrayList<>(tbl_stdnts.getItems());
+
+        if (tempStudentList.isEmpty()) {
+            return null;
+        }
+
+        tempStudentList.sort(Comparator.comparing(StudentsDTO::getStID));
+
+        return tempStudentList.get(tempStudentList.size() - 1).getStID();
+    }
+
 
     public void save(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String sId = txt_id.getText();
@@ -100,7 +134,7 @@ public class StudentsController {
                 }
 
                 StudentsDTO newStudent = new StudentsDTO(sId, name, address, contact, new Date(), position);
-                studentBO.addStudents(new StudentsDTO(newStudent));
+                studentBO.addStudents(new StudentsDTO(sId, name, address, contact, new Date(), position));
                 tbl_stdnts.getItems().add(newStudent);
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Student saved successfully!").show();
@@ -188,7 +222,7 @@ public class StudentsController {
         txt_contact.setDisable(true);
         txt_date.setDisable(true);
         cmb_position.setDisable(true);
-        btn_save.setDisable(true);
+        btn_save.setDisable(false);
         btn_delete.setDisable(true);
     }
 
@@ -205,7 +239,6 @@ public class StudentsController {
         txt_name.clear();
         txt_address.clear();
         txt_contact.clear();
-
         txt_date.setValue(null);
         cmb_position.getSelectionModel().clearSelection();
 
@@ -216,43 +249,7 @@ public class StudentsController {
     }
 
 
-    private String generateNewId() {
-        try {
-            // Try getting the next ID from the database or your business logic.
-            String lastId = studentBO.generateNew_StudentID();
-            System.out.println("Last ID fetched from DB: " + lastId);  // Print the last ID
 
-            // If we get a null or empty ID, we start from "S001"
-            if (lastId == null || lastId.isEmpty()) {
-                return "S001";
-            }
-
-            // If we have a valid last ID, let's parse it and increment by 1
-            int idNumber = Integer.parseInt(lastId.replace("S", "").replace("-", "")); // Remove "S" and "-" to get the number
-            idNumber++; // Increment the number
-
-            // Return the new ID in the required format (e.g., S001, S002, etc.)
-            return String.format("S%03d", idNumber); // Ensure the ID is always 3 digits
-        } catch (Exception e) {
-            // Handle any errors during the ID generation
-            e.printStackTrace();
-            return "S001"; // Fallback ID in case of an error
-        }
-    }
-
-
-
-    private String getLastStudentID() {
-        List<StudentsDTO> tempStudentList = new ArrayList<>(tbl_stdnts.getItems());
-
-        if (tempStudentList.isEmpty()) {
-            return null;
-        }
-
-        tempStudentList.sort(Comparator.comparing(StudentsDTO::getStID));
-
-        return tempStudentList.get(tempStudentList.size() - 1).getStID();
-    }
 
 //    private void addRegex(JFXTextField textField, String pattern, String message) {
 //        textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -285,5 +282,4 @@ public class StudentsController {
     }
 
 }
-
 

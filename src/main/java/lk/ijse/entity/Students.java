@@ -9,86 +9,43 @@ import java.util.Set;
 public class Students {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String stID;
     private String stFullName;
     private String stAddress;
     private String stContact;
     private Date registrationDate;
-    private String position;
 
-
-    @ManyToOne
-    @JoinColumn(name = "name", nullable = false)
+    // Many students can have one user (Many-to-One relationship)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userID")   // Foreign key to User
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    // Many students can enroll in many programs (Many-to-Many relationship)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Student_programs",
-            joinColumns = @JoinColumn(name = "stID"),
-            inverseJoinColumns = @JoinColumn(name = "programID")
+            name = "student_program",  // Join table name
+            joinColumns = @JoinColumn(name = "stID"),  // Foreign key for students
+            inverseJoinColumns = @JoinColumn(name = "programID")  // Foreign key for programs
     )
-
     private Set<Programs> programs = new HashSet<>();
 
-    @OneToMany(mappedBy = "students", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Payments> payments = new HashSet<>();
-
-    public Students(String position, String stFullName, String stAddress, String stContact, Date registrationDate, String dtoPosition) {
-        this.position = position;
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Payments> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<Payments> payments) {
-        this.payments = payments;
-    }
-
-    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position, User user, Set<Programs> programs, Set<Payments> payments) {
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, User user) {
         this.stID = stID;
         this.stFullName = stFullName;
         this.stAddress = stAddress;
         this.stContact = stContact;
         this.registrationDate = registrationDate;
-        this.position = position;
         this.user = user;
-        this.programs = programs;
-        this.payments = payments;
     }
 
     public Students() {
+
     }
 
-    @Override
-    public String toString() {
-        return "Students{" +
-                "stID='" + stID + '\'' +
-                ", stFullName='" + stFullName + '\'' +
-                ", stAddress='" + stAddress + '\'' +
-                ", stContact='" + stContact + '\'' +
-                ", registrationDate=" + registrationDate +
-                ", programs=" + programs +
-                '}';
-    }
-
+    // Getters and setters for all fields
     public String getStID() {
         return stID;
     }
@@ -129,11 +86,31 @@ public class Students {
         this.registrationDate = registrationDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Set<Programs> getPrograms() {
         return programs;
     }
 
     public void setPrograms(Set<Programs> programs) {
         this.programs = programs;
+    }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "stID='" + stID + '\'' +
+                ", stFullName='" + stFullName + '\'' +
+                ", stAddress='" + stAddress + '\'' +
+                ", stContact='" + stContact + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", programs=" + programs +
+                '}';
     }
 }

@@ -9,13 +9,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.UserBO;
-import lk.ijse.dto.StudentsDTO;
 import lk.ijse.dto.UserDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class UserController {
