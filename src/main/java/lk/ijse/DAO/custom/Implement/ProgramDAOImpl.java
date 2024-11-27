@@ -5,6 +5,7 @@ import lk.ijse.config.FactoryConfiguration;
 import lk.ijse.entity.Programs;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -66,11 +67,31 @@ public class ProgramDAOImpl implements ProgramsDAO {
 
     @Override
     public String generateNewID() throws Exception {
-        return null;
-    }
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            String lastID = (String) session.createQuery("SELECT MAX(programID) FROM Programs").uniqueResult();
+            transaction.commit();
 
+            if (lastID != null) {
+                int newID = Integer.parseInt(lastID.replace("P", "")) + 1;
+                return String.format("P%03d", newID);
+            } else {
+                return "P001"; // Default ID if no students exist
+            }
+        }
+    }
     @Override
     public boolean exist(String id) throws Exception {
-        return false;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            // Use HQL to check if the entity exists
+            Query<Long> query = session.createQuery("SELECT COUNT(p) FROM Programs p WHERE p.programID = :id", Long.class);
+            query.setParameter("id", id);
+
+            // Execute the query and get the result
+            Long count = query.uniqueResult();
+            return count > 0; // Return true if count is greater than 0
+        } catch (Exception e) {
+            throw new Exception("Failed to check existence of the program with ID: " + id, e);
+        }
     }
 }

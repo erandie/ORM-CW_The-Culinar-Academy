@@ -21,8 +21,8 @@ public class StudentBoImpl implements StudentBO {
                     student.getStFullName(),
                     student.getStAddress(),
                     student.getStContact(),
-                    student.getRegistrationDate()
-            ));
+                    student.getRegistrationDate(),
+                    student.getPosition()));
         }
         return allStudents;
     }
@@ -34,7 +34,8 @@ public class StudentBoImpl implements StudentBO {
                 dto.getStFullName(),
                 dto.getStAddress(),
                 dto.getStContact(),
-                dto.getRegistrationDate()
+                dto.getRegistrationDate(),
+                dto.getPosition()
         ));
     }
 
@@ -45,7 +46,8 @@ public class StudentBoImpl implements StudentBO {
                 dto.getStFullName(),
                 dto.getStAddress(),
                 dto.getStContact(),
-                dto.getRegistrationDate()
+                dto.getRegistrationDate(),
+                dto.getPosition()
         ));
     }
 
@@ -63,9 +65,20 @@ public class StudentBoImpl implements StudentBO {
                     student.getStFullName(),
                     student.getStAddress(),
                     student.getStContact(),
-                    student.getRegistrationDate()
+                    student.getRegistrationDate(),
+                    student.getPosition()
             );
         }
         return null;
+    }
+
+    @Override
+    public String generateNew_StudentID() throws Exception {
+        return studentDAO.generateNewID();
+    }
+
+    @Override
+    public boolean existStudent(String id) throws Exception {
+        return studentDAO.exist(id);
     }
 }

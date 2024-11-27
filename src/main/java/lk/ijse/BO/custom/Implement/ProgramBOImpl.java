@@ -65,4 +65,14 @@ public class ProgramBOImpl implements ProgramBO {
         }
         return null;
     }
+
+    @Override
+    public boolean existProgram(String id) throws Exception {
+        return programsDAO.exist(id);
+    }
+
+    @Override
+    public String generateNew_ProgramID() throws Exception {
+        return programsDAO.generateNewID();
+    }
 }

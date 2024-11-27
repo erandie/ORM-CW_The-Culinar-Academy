@@ -26,19 +26,10 @@ public class DashboardController {
     @FXML
     private AnchorPane child_root;
 
-//    @FXML
-//    private void initialize() {
-        // You can initialize any necessary data or set up event handlers here
-//        btn_student.setOnAction(event -> loadFXML("/view/Students.fxml")); // Change to your FXML file
-//        btn_program.setOnAction(event -> loadFXML("/view/Programs.fxml")); // Change to your FXML file
-//        btn_payment.setOnAction(event -> loadFXML("otherFXML3.fxml")); // Change to your FXML file
-//        btn_user.setOnAction(event -> loadFXML("otherFXML3.fxml")); // Change to your FXML file
-//    }
-
 
     private void loadFXML(String s) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Students.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Students-2.fxml"));
             Parent root = loader.load();
             mainPane.getChildren().setAll(root);
         } catch (IOException e) {
@@ -50,7 +41,7 @@ public class DashboardController {
     void handleStudentButtonClick(ActionEvent event) {
         child_root.getChildren().clear();
         try {
-            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Students.fxml")));
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Students-2.fxml")));
         } catch (IOException e) {}
     }
 
@@ -58,7 +49,7 @@ public class DashboardController {
     void handleProgramButtonClick(ActionEvent event) {
         child_root.getChildren().clear();
         try {
-            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Programs.fxml")));
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/programs-02.fxml")));
         } catch (IOException e) {}
     }
 
@@ -66,7 +57,7 @@ public class DashboardController {
     void handlePaymentButtonClick(ActionEvent event) {
         child_root.getChildren().clear();
         try {
-            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Payment.fxml")));
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/Payment-02.fxml")));
         } catch (IOException e) {}
     }
 
@@ -74,7 +65,7 @@ public class DashboardController {
     void handleUserButtonClick(ActionEvent event) {
         child_root.getChildren().clear();
         try {
-            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/User.fxml")));
+            child_root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/User-02.fxml")));
         } catch (IOException e) {}
     }
 }

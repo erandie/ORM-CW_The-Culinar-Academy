@@ -17,4 +17,7 @@ public interface PaymentBO extends SuperBO {
 
     public PaymentDTO searchPayment(String id) throws Exception;
 
+    public String generateNew_PaymentID() throws Exception;
+
+    public boolean existPayment(String payId) throws Exception;
 }

@@ -6,20 +6,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.PaymentBO;
 import lk.ijse.BO.custom.StudentBO;
 import lk.ijse.DAO.custom.Implement.ProgramDAOImpl;
 import lk.ijse.DAO.custom.Implement.StudentDAOImpl;
 import lk.ijse.dto.PaymentDTO;
-import lk.ijse.dto.StudentsDTO;
 import lk.ijse.entity.Programs;
 import lk.ijse.entity.Students;
 
-import java.util.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PaymentController {
+
     @FXML
     private ComboBox<String> cmb_progrm_id;
 
@@ -53,12 +57,43 @@ public class PaymentController {
     @FXML
     private TableView<PaymentDTO> tbl_payment;
 
-    private ProgramDAOImpl programDAOImpl = new ProgramDAOImpl();
-    private StudentDAOImpl studentDAOImpl = new StudentDAOImpl();
+    private final ProgramDAOImpl programDAOImpl = new ProgramDAOImpl();
+    private final StudentDAOImpl studentDAOImpl = new StudentDAOImpl();
     private final PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
-    private final StudentBO studentBO = (StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
 
     public void initialize() throws Exception {
+        loadComboBoxes();
+        setupTableColumns();
+        loadAllPaymentsDetails();
+
+        cmb_student_id.setOnAction(this::load_student);
+        cmb_progrm_id.setOnAction(this::load_program);
+
+        tbl_payment.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                populateFields(newSelection);
+            }
+        });
+
+        initUI();
+
+    }
+
+    private void initUI() {
+        clearFields();
+        txt_payment_id.setDisable(true);
+        cmb_student_id.setDisable(true);
+        cmb_progrm_id.setDisable(true);
+        txt_student_name.setDisable(true);
+        txt_prgrm_name.setDisable(true);
+        txt_amount.setDisable(true);
+        txt_paid_amount.setDisable(true);
+        txt_payment_id.setDisable(true);
+        btn_updateBalance.setDisable(true);
+        txt_pay_date.setDisable(true);
+    }
+
+    private void loadComboBoxes() throws Exception {
         List<Programs> programsList = programDAOImpl.getAll();
         for (Programs programs : programsList) {
             cmb_progrm_id.getItems().add(programs.getProgramID());
@@ -68,33 +103,16 @@ public class PaymentController {
         for (Students students : studentsList) {
             cmb_student_id.getItems().add(students.getStID());
         }
+    }
 
-        cmb_student_id.setOnAction(this::load_student);
-        cmb_progrm_id.setOnAction(this::load_program);
-
+    private void setupTableColumns() {
         tbl_payment.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("paymentID"));
-        tbl_payment.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("studentID"));
-        tbl_payment.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("programID"));
+        tbl_payment.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("studentId"));
+        tbl_payment.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("programId"));
         tbl_payment.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("amount"));
         tbl_payment.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("paidAmount"));
         tbl_payment.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("balance"));
         tbl_payment.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
-
-        loadAllPaymentsDetails();
-
-        tbl_payment.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                populateFields(newSelection);
-            }
-        });
-    }
-
-    private void populateFields(PaymentDTO payment) {
-        txt_payment_id.setText(String.valueOf(payment.getPaymentID()));
-        txt_pay_date.setValue(payment.getPaymentDate());
-        txt_amount.setText(String.valueOf(payment.getAmount()));
-        btn_updateBalance.setText(String.valueOf(payment.getBalance()));
-        txt_paid_amount.setText(String.valueOf(payment.getPaidAmount()));
     }
 
     private void loadAllPaymentsDetails() {
@@ -106,6 +124,16 @@ public class PaymentController {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error Loading Payments").show();
         }
+    }
+
+    private void populateFields(PaymentDTO payment) {
+        txt_payment_id.setText(payment.getPaymentID());
+        cmb_student_id.setValue(payment.getStudentId());
+        cmb_progrm_id.setValue(payment.getProgramId());
+        txt_pay_date.setValue(payment.getPaymentDate());
+        txt_amount.setText(String.valueOf(payment.getAmount()));
+        txt_paid_amount.setText(String.valueOf(payment.getPaidAmount()));
+        btn_updateBalance.setText(String.valueOf(payment.getBalance()));
     }
 
     public void load_student(ActionEvent actionEvent) {
@@ -146,30 +174,26 @@ public class PaymentController {
 
     public void updateBalance(ActionEvent event) {
         try {
-            String fullPayment = txt_amount.getText();
-            String paidAmount = txt_paid_amount.getText();
+            double fullPaymentValue = Double.parseDouble(txt_amount.getText());
+            double paidAmountValue = Double.parseDouble(txt_paid_amount.getText());
 
-            if (!fullPayment.isEmpty() && !paidAmount.isEmpty()) {
-                double fullPaymentValue = Double.parseDouble(fullPayment);
-                double paidAmountValue = Double.parseDouble(paidAmount);
-
-                double balance = fullPaymentValue - paidAmountValue;
-                btn_updateBalance.setText(String.valueOf(balance));
-            }
+            double balance = fullPaymentValue - paidAmountValue;
+            btn_updateBalance.setText(String.valueOf(balance));
         } catch (NumberFormatException e) {
-            btn_updateBalance.setText("");
-            e.printStackTrace();
+            btn_updateBalance.setText("0.0");
         }
     }
 
     public void save(ActionEvent event) {
         try {
             PaymentDTO payment = new PaymentDTO(
-                    txt_payment_id.getId(),
+                    txt_payment_id.getText(),
+                    cmb_student_id.getValue(),
+                    cmb_progrm_id.getValue(),
                     txt_pay_date.getValue(),
                     Double.parseDouble(txt_amount.getText()),
-                    Double.parseDouble(btn_updateBalance.getText()),
-                    Double.parseDouble(txt_paid_amount.getText())
+                    Double.parseDouble(txt_paid_amount.getText()),
+                    Double.parseDouble(btn_updateBalance.getText())
             );
 
             paymentBO.addPayment(payment);
@@ -177,38 +201,21 @@ public class PaymentController {
             loadAllPaymentsDetails();
             clearFields();
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error saving payment" + e).show();
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error saving payment").show();
         }
     }
-
 
     private void clearFields() {
         txt_payment_id.clear();
         txt_pay_date.setValue(null);
         txt_amount.clear();
-        btn_updateBalance.setText("");
         txt_paid_amount.clear();
+        btn_updateBalance.setText("Update Balance");
         txt_student_name.clear();
         txt_prgrm_name.clear();
-    }
-
-    public void update(ActionEvent actionEvent) {
-        try {
-            StudentsDTO student = new StudentsDTO(
-                    txt_payment_id.getText(),
-                    txt_student_name.getText(),
-                    "", // Placeholder for other fields if needed
-                    "", // Placeholder for contact if needed
-                    new Date() // Ensure parsing of date as needed
-            );
-            studentBO.updateStudents(student);
-            new Alert(Alert.AlertType.CONFIRMATION, "Student Updated Successfully!").show();
-            loadAllPaymentsDetails();
-            clearFields();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error Updating Student").show();
-        }
+        cmb_student_id.setValue(null);
+        cmb_progrm_id.setValue(null);
     }
 
     public void delete(ActionEvent actionEvent) {
@@ -226,21 +233,73 @@ public class PaymentController {
         }
     }
 
-    public void search(ActionEvent actionEvent) {
+    public void txtCustomerNAmeOnKeyReleased(KeyEvent keyEvent) {
+
+    }
+
+    public void txtCustomerContactOnKeyReleased(KeyEvent keyEvent) {
+
+    }
+
+    public void btnAddNew_OnAction(ActionEvent actionEvent) {
+        txt_payment_id.setDisable(false);
+        cmb_student_id.setDisable(false);
+        cmb_progrm_id.setDisable(false);
+        txt_student_name.setDisable(false);
+        txt_prgrm_name.setDisable(false);
+        txt_amount.setDisable(false);
+        txt_paid_amount.setDisable(false);
+        txt_payment_id.setDisable(false);
+        btn_updateBalance.setDisable(false);
+        txt_pay_date.setDisable(false);
+        txt_payment_id.clear();
+        txt_payment_id.setText(generateNewId());
+        cmb_student_id.setValue(null);
+        cmb_progrm_id.setValue(null);
+        txt_student_name.clear();
+        txt_prgrm_name.clear();
+        txt_amount.clear();
+        txt_payment_id.clear();
+        btn_updateBalance.setText("Update Balance");
+        txt_pay_date.setValue(null);
+    }
+
+    private String generateNewId() {
         try {
-            PaymentDTO payment = paymentBO.searchPayment(txt_payment_id.getText());
-            if (payment != null) {
-                populateFields(payment);
-            } else {
-                new Alert(Alert.AlertType.WARNING, "Payment Not Found!").show();
-            }
-        } catch (Exception e) {
+            return paymentBO.generateNew_PaymentID();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "failed to generate a new id!!");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error Searching Payment").show();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (tbl_payment.getItems().isEmpty()) {
+            return "P001";
+        } else {
+            String pId = getLastPaymentID();
+            int newPaymentID = Integer.parseInt(pId.replace("P", "")) + 1;
+            return String.format("P00-%03d", newPaymentID);
         }
     }
 
-    public void getAll(ActionEvent actionEvent) {
-        loadAllPaymentsDetails();
+    private String getLastPaymentID() {
+        List<PaymentDTO> tempPaymentList = new ArrayList<>(tbl_payment.getItems());
+
+        if (tempPaymentList.isEmpty()) {
+            return null;
+        }
+
+        tempPaymentList.sort(Comparator.comparing(PaymentDTO::getPaymentID));
+
+        return tempPaymentList.get(tempPaymentList.size() - 1).getPaymentID();
+    }
+
+    public void search(ActionEvent actionEvent) {
+
     }
 }
+
+
+

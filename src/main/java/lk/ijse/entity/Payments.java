@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Table(name = "Payments")
 public class Payments {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String paymentID;
+    private String studentId;
+    private String programId;
     private LocalDate paymentDate;
     private Double amount;
     private Double balance;
@@ -24,34 +24,16 @@ public class Payments {
     @OneToOne(mappedBy = "payments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Programs programs;
 
-    public Payments(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
-    }
-
-    public Payments(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount, Students students, Programs programs) {
-        this.paymentID = paymentID;
-        this.paymentDate = paymentDate;
-        this.amount = amount;
-        this.balance = balance;
-        this.paidAmount = paidAmount;
-        this.students = students;
-        this.programs = programs;
-    }
-
-    public Payments() {
-
-    }
-
-
     @Override
     public String toString() {
         return "Payments{" +
                 "paymentID='" + paymentID + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", programId='" + programId + '\'' +
                 ", paymentDate=" + paymentDate +
                 ", amount=" + amount +
                 ", balance=" + balance +
                 ", paidAmount=" + paidAmount +
-                ", students=" + students +
-                ", programs=" + programs +
                 '}';
     }
 
@@ -61,6 +43,22 @@ public class Payments {
 
     public void setPaymentID(String paymentID) {
         this.paymentID = paymentID;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(String programId) {
+        this.programId = programId;
     }
 
     public LocalDate getPaymentDate() {
@@ -95,19 +93,28 @@ public class Payments {
         this.paidAmount = paidAmount;
     }
 
-    public Students getStudents() {
-        return students;
+    public Payments(String paymentID, String studentId, String programId, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
+        this.paymentID = paymentID;
+        this.studentId = studentId;
+        this.programId = programId;
+        this.paymentDate = paymentDate;
+        this.amount = amount;
+        this.balance = balance;
+        this.paidAmount = paidAmount;
     }
 
-    public void setStudents(Students students) {
+    public Payments() {
+    }
+
+    public Payments(String paymentID, String studentId, String programId, LocalDate paymentDate, Double amount, Double balance, Double paidAmount, Students students, Programs programs) {
+        this.paymentID = paymentID;
+        this.studentId = studentId;
+        this.programId = programId;
+        this.paymentDate = paymentDate;
+        this.amount = amount;
+        this.balance = balance;
+        this.paidAmount = paidAmount;
         this.students = students;
-    }
-
-    public Programs getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(Programs programs) {
         this.programs = programs;
     }
 }

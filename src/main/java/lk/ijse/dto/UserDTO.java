@@ -1,7 +1,9 @@
 package lk.ijse.dto;
 
-public class UserDTO {
-    private Long userID;
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
+    private String userID;
     private String name;
     private String email;
     private String userName;
@@ -12,7 +14,7 @@ public class UserDTO {
 
     }
 
-    public UserDTO(Long userID, String name, String email, String userName, String password, String position) {
+    public UserDTO(String userID, String name, String email, String userName, String password, String position) {
         this.userID = userID;
         this.name = name;
         this.email = email;
@@ -21,11 +23,11 @@ public class UserDTO {
         this.position = position;
     }
 
-    public Long getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -72,7 +74,7 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
-                "userID=" + userID +
+                "userID='" + userID + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +

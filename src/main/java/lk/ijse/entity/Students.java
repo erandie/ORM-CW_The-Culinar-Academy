@@ -14,6 +14,13 @@ public class Students {
     private String stAddress;
     private String stContact;
     private Date registrationDate;
+    private String position;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "userID", nullable = false)
+    private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -27,6 +34,28 @@ public class Students {
     @OneToMany(mappedBy = "students", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Payments> payments = new HashSet<>();
 
+    public Students(String position, String stFullName, String stAddress, String stContact, Date registrationDate, String dtoPosition) {
+        this.position = position;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Set<Payments> getPayments() {
         return payments;
     }
@@ -35,14 +64,16 @@ public class Students {
         this.payments = payments;
     }
 
-
-
-    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position, User user, Set<Programs> programs, Set<Payments> payments) {
         this.stID = stID;
         this.stFullName = stFullName;
         this.stAddress = stAddress;
         this.stContact = stContact;
         this.registrationDate = registrationDate;
+        this.position = position;
+        this.user = user;
+        this.programs = programs;
+        this.payments = payments;
     }
 
     public Students() {

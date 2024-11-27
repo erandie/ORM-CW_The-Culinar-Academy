@@ -9,19 +9,18 @@ public class StudentsDTO implements Serializable {
     private String stAddress;
     private String stContact;
     private Date registrationDate;
+    private String position;
 
-    public StudentsDTO(String stID, String stFullName, String stAddress, String stContact, Date registrationDate) {
+    public StudentsDTO(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {
         this.stID = stID;
         this.stFullName = stFullName;
         this.stAddress = stAddress;
         this.stContact = stContact;
         this.registrationDate = registrationDate;
+        this.position = this.position;
     }
 
-    // Getters and Setters
-    // ...
-
-    public StudentsDTO() {
+    public StudentsDTO(StudentsDTO newStudent) {
 
     }
 
@@ -63,6 +62,14 @@ public class StudentsDTO implements Serializable {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     @Override

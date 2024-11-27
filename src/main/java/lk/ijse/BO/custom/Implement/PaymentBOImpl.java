@@ -23,6 +23,8 @@ public class PaymentBOImpl implements PaymentBO {
         for (Payments payments : paymentDAO.getAll()) {
             alaPayment.add(new PaymentDTO(
                     payments.getPaymentID(),
+                    payments.getStudentId(),
+                    payments.getProgramId(),
                     payments.getPaymentDate(),
                     payments.getAmount(),
                     payments.getBalance(),
@@ -36,6 +38,8 @@ public class PaymentBOImpl implements PaymentBO {
     public boolean addPayment(PaymentDTO dto) throws Exception {
         return paymentDAO.add(new Payments(
                 dto.getPaymentID(),
+                dto.getStudentId(),
+                dto.getProgramId(),
                 dto.getPaymentDate(),
                 dto.getAmount(),
                 dto.getBalance(),
@@ -47,6 +51,8 @@ public class PaymentBOImpl implements PaymentBO {
     public boolean updatePayment(PaymentDTO dto) throws Exception {
         return paymentDAO.update(new Payments(
                 dto.getPaymentID(),
+                dto.getStudentId(),
+                dto.getProgramId(),
                 dto.getPaymentDate(),
                 dto.getAmount(),
                 dto.getBalance(),
@@ -65,6 +71,8 @@ public class PaymentBOImpl implements PaymentBO {
         if (payments != null) {
             return new PaymentDTO(
                     payments.getPaymentID(),
+                    payments.getStudentId(),
+                    payments.getProgramId(),
                     payments.getPaymentDate(),
                     payments.getAmount(),
                     payments.getBalance(),
@@ -73,5 +81,15 @@ public class PaymentBOImpl implements PaymentBO {
         }
 
         return null;
+    }
+
+    @Override
+    public String generateNew_PaymentID() throws Exception {
+        return paymentDAO.generateNewID();
+    }
+
+    @Override
+    public boolean existPayment(String payId) throws Exception {
+        return paymentDAO.exist(payId);
     }
 }

@@ -76,4 +76,14 @@ public class UserBOImpl implements UserBO {
         }
         return null;
     }
+
+    @Override
+    public boolean existUser(String id) throws Exception {
+        return userDAO.exist(id);
+    }
+
+    @Override
+    public String generateNew_UserID() throws Exception {
+        return userDAO.generateNewID();
+    }
 }

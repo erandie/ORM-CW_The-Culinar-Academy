@@ -9,46 +9,23 @@ import java.time.LocalDate;
 
 public class PaymentDTO implements Serializable {
     private String paymentID;
+    private String studentId;
+    private String programId;
     private LocalDate paymentDate;
     private Double amount;
     private Double balance;
     private Double paidAmount;
 
-//    @ManyToOne
-//    @JoinColumn(name = "stID")
-//    private Students students;
-//
-//    @OneToOne(mappedBy = "payments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Programs programs;
-
-    public PaymentDTO(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
-    }
-
-    public PaymentDTO(String paymentID, LocalDate paymentDate, Double amount, Double balance, Double paidAmount, Students students, Programs programs) {
-        this.paymentID = paymentID;
-        this.paymentDate = paymentDate;
-        this.amount = amount;
-        this.balance = balance;
-        this.paidAmount = paidAmount;
-//        this.students = students;
-//        this.programs = programs;
-    }
-
-    public PaymentDTO() {
-
-    }
-
-
     @Override
     public String toString() {
         return "Payments{" +
                 "paymentID='" + paymentID + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", programId='" + programId + '\'' +
                 ", paymentDate=" + paymentDate +
                 ", amount=" + amount +
                 ", balance=" + balance +
                 ", paidAmount=" + paidAmount +
-//                ", students=" + students +
-//                ", programs=" + programs +
                 '}';
     }
 
@@ -58,6 +35,22 @@ public class PaymentDTO implements Serializable {
 
     public void setPaymentID(String paymentID) {
         this.paymentID = paymentID;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(String programId) {
+        this.programId = programId;
     }
 
     public LocalDate getPaymentDate() {
@@ -92,20 +85,21 @@ public class PaymentDTO implements Serializable {
         this.paidAmount = paidAmount;
     }
 
-//    public Students getStudents() {
-//        return students;
-//    }
-//
-//    public void setStudents(Students students) {
-//        this.students = students;
-//    }
-//
-//    public Programs getPrograms() {
-//        return programs;
-//    }
-//
-//    public void setPrograms(Programs programs) {
-//        this.programs = programs;
-//    }
+    public PaymentDTO(String paymentID, String studentId, String programId, LocalDate paymentDate, Double amount, Double balance, Double paidAmount) {
+        this.paymentID = paymentID;
+        this.studentId = studentId;
+        this.programId = programId;
+        this.paymentDate = paymentDate;
+        this.amount = amount;
+        this.balance = balance;
+        this.paidAmount = paidAmount;
+    }
+
+    public PaymentDTO() {
+    }
+
+
+
+
 }
 

@@ -17,4 +17,7 @@ public interface UserBO extends SuperBO {
 
     public UserDTO searchUser(String id) throws Exception;
 
+    public boolean existUser(String id) throws Exception;
+
+    public String generateNew_UserID() throws Exception;
 }

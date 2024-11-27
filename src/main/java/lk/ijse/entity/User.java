@@ -1,27 +1,39 @@
 package lk.ijse.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.persistence.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String userID;
     private String name;
     private String email;
     private String userName;
     private String password;
     private String position;
 
-    public User() {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Students> students = new ArrayList<>();
+
+    public List<Students> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Students> students) {
+        this.students = students;
+    }
+
+    public User(String admin, String password, String s) {
 
     }
 
-    public User(Long userID, String name, String email, String userName, String password, String position) {
+    public User(String userID, String name, String email, String userName, String password, String position) {
         this.userID = userID;
         this.name = name;
         this.email = email;
@@ -30,11 +42,15 @@ public class User {
         this.position = position;
     }
 
-    public Long getUserID() {
+    public User() {
+
+    }
+
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -81,7 +97,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID=" + userID +
+                "userID='" + userID + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +

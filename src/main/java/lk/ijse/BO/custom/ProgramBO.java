@@ -17,6 +17,9 @@ public interface ProgramBO extends SuperBO {
 
     public ProgramsDTO searchProgram(String id) throws Exception;
 
+    public boolean existProgram(String id) throws Exception;
+
+    public String generateNew_ProgramID() throws Exception;
 
 
 }

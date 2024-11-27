@@ -5,6 +5,7 @@ import lk.ijse.config.FactoryConfiguration;
 import lk.ijse.entity.Payments;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.UUID;
@@ -65,11 +66,32 @@ public class PaymentDAOImpl implements PaymentDAO {
 
         @Override
         public String generateNewID() throws Exception {
-            return null;
+            try (Session session = FactoryConfiguration.getInstance().getSession()) {
+                Transaction transaction = session.beginTransaction();
+                String lastID = (String) session.createQuery("SELECT MAX(paymentID) FROM Payments ").uniqueResult();
+                transaction.commit();
+
+                if (lastID != null) {
+                    int newID = Integer.parseInt(lastID.replace("P", "")) + 1;
+                    return String.format("P%03d", newID);
+                } else {
+                    return "P001"; // Default ID if no students exist
+                }
+            }
         }
 
         @Override
         public boolean exist(String id) throws Exception {
-            return false;
+            try (Session session = FactoryConfiguration.getInstance().getSession()) {
+                // Use HQL to check if the entity exists
+                Query<Long> query = session.createQuery("SELECT COUNT(p) FROM Payments p WHERE p.paymentID = :id", Long.class);
+                query.setParameter("id", id);
+
+                // Execute the query and get the result
+                Long count = query.uniqueResult();
+                return count > 0; // Return true if count is greater than 0
+            } catch (Exception e) {
+                throw new Exception("Failed to check existence of the payment with ID: " + id, e);
+            }
         }
     }
