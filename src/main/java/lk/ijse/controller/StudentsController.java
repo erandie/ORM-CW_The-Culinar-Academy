@@ -10,7 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.StudentBO;
+import lk.ijse.DAO.custom.Implement.ProgramDAOImpl;
+import lk.ijse.DAO.custom.ProgramsDAO;
 import lk.ijse.dto.StudentsDTO;
+import lk.ijse.entity.Programs;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -25,12 +28,17 @@ public class StudentsController {
     @FXML
     private PasswordField txt_password;
     private final StudentBO studentBO = (StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
+    private final ProgramDAOImpl programDAO = new ProgramDAOImpl();
     @FXML
     private DatePicker txt_date;
 
+    @FXML
+    private ComboBox<String> cmb_prgrm;
+
+
     private ObservableList<String> positionTypes = FXCollections.observableArrayList("Admin", "Coordinator");
 
-    public void initialize() {
+    public void initialize() throws Exception {
         tbl_stdnts.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("stID"));
         tbl_stdnts.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("stFullName"));
         tbl_stdnts.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("stAddress"));
@@ -43,6 +51,7 @@ public class StudentsController {
         txt_address.setOnAction(actionEvent -> txt_contact.requestFocus());
         txt_contact.setOnAction(actionEvent -> txt_date.requestFocus());
 
+        loadPrgrmComboBox();
         loadAllStudents();
 
         cmb_position.setItems(positionTypes);
@@ -62,6 +71,14 @@ public class StudentsController {
 
         initUI();
 
+
+    }
+
+    private void loadPrgrmComboBox() throws Exception {
+        List<Programs> programsList = programDAO.getAll();
+        for (Programs programs : programsList) {
+            cmb_prgrm.getItems().add(programs.getProgramID());
+        }
 
     }
 

@@ -2,6 +2,7 @@ package lk.ijse.entity;
 
 import jakarta.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,8 +13,8 @@ public class Programs {
     private String duration;
     private Double prFee;
 
-    @ManyToMany(mappedBy = "programs", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Students> students = new HashSet<>();
+    @ManyToMany
+    private List<Students> students;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "programID")
@@ -27,18 +28,6 @@ public class Programs {
         this.prName = prName;
         this.duration = duration;
         this.prFee = prFee;
-    }
-
-    @Override
-    public String toString() {
-        return "Programs{" +
-                "programID='" + programID + '\'' +
-                ", prName='" + prName + '\'' +
-                ", duration='" + duration + '\'' +
-                ", prFee=" + prFee +
-                ", students=" + students +
-                ", payments=" + payments +
-                '}';
     }
 
     public String getProgramID() {
@@ -73,11 +62,22 @@ public class Programs {
         this.prFee = prFee;
     }
 
-    public Set<Students> getStudents() {
+    @Override
+    public String toString() {
+        return "Programs{" +
+                "students=" + students +
+                '}';
+    }
+
+    public List<Students> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Students> students) {
+    public void setStudents(List<Students> students) {
+        this.students = students;
+    }
+
+    public Programs(List<Students> students) {
         this.students = students;
     }
 
