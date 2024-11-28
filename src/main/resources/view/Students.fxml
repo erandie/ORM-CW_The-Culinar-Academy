@@ -54,9 +54,9 @@
             <TextField fx:id="txtUserId" layoutX="146.0" layoutY="148.0" promptText="UserId" text="UserId" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="97.0" fitWidth="119.0" layoutX="277.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="111.0" fitWidth="139.0" layoutX="273.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/cheff-07.png" />
+            <Image url="@../Images/cheff-16(6).png" />
          </image>
       </ImageView>
    </children>
