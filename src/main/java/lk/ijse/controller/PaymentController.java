@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class PaymentController {
@@ -57,6 +58,15 @@ public class PaymentController {
 
     @FXML
     private TableView<PaymentDTO> tbl_payment;
+
+    @FXML
+    private Button btn_delete;
+
+    @FXML
+    private Button btn_save;
+
+    @FXML
+    private Button btnAddNew;
 
     private final ProgramDAOImpl programDAOImpl = new ProgramDAOImpl();
     private final StudentDAOImpl studentDAOImpl = new StudentDAOImpl();
@@ -111,8 +121,8 @@ public class PaymentController {
         tbl_payment.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("studentId"));
         tbl_payment.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("programId"));
         tbl_payment.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("amount"));
-        tbl_payment.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("paidAmount"));
-        tbl_payment.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("balance"));
+        tbl_payment.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("balance"));
+        tbl_payment.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("paidAmount"));
         tbl_payment.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
     }
 
@@ -135,6 +145,20 @@ public class PaymentController {
         txt_amount.setText(String.valueOf(payment.getAmount()));
         txt_paid_amount.setText(String.valueOf(payment.getPaidAmount()));
         btn_updateBalance.setText(String.valueOf(payment.getBalance()));
+
+        txt_payment_id.setDisable(false);
+        cmb_student_id.setDisable(false);
+        cmb_progrm_id.setDisable(false);
+        txt_student_name.setDisable(false);
+        txt_prgrm_name.setDisable(false);
+        txt_amount.setDisable(false);
+        txt_paid_amount.setDisable(false);
+        txt_payment_id.setDisable(false);
+        btn_updateBalance.setDisable(false);
+        txt_pay_date.setDisable(false);
+
+        btn_save.setText("Update");
+        btn_save.setDisable(false);
     }
 
     public void load_student(ActionEvent actionEvent) {
@@ -186,25 +210,97 @@ public class PaymentController {
     }
 
     public void save(ActionEvent event) {
-        try {
-            PaymentDTO payment = new PaymentDTO(
-                    txt_payment_id.getText(),
-                    cmb_student_id.getValue(),
-                    cmb_progrm_id.getValue(),
-                    txt_pay_date.getValue(),
-                    Double.parseDouble(txt_amount.getText()),
-                    Double.parseDouble(txt_paid_amount.getText()),
-                    Double.parseDouble(btn_updateBalance.getText())
-            );
 
-            paymentBO.addPayment(payment);
-            new Alert(Alert.AlertType.CONFIRMATION, "Payment added successfully").show();
-            loadAllPaymentsDetails();
-            clearFields();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error saving payment").show();
+        String payId = txt_payment_id.getText();
+        String stId = cmb_student_id.getValue();
+        String prId = cmb_progrm_id.getValue();
+        LocalDate date = txt_pay_date.getValue();
+        Double amount = Double.parseDouble(txt_amount.getText());
+        Double paidAmount = Double.parseDouble(txt_paid_amount.getText());
+        Double balance = Double.parseDouble(btn_updateBalance.getText());
+
+        double fee = 0.0;
+        try {
+            fee = Double.parseDouble(String.valueOf(paidAmount));
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid fee value. Please enter a valid number.").show();
+            return;
         }
+
+        if (btn_save.getText().equalsIgnoreCase("Save")) {
+            try {
+                if (existPayment(payId)) {
+                    new Alert(Alert.AlertType.ERROR, payId + "already Exists!").show();
+                    return;
+                }
+
+                paymentBO.addPayment(new PaymentDTO(payId, stId, prId, date, amount, paidAmount, balance));
+
+                tbl_payment.getItems().add(new PaymentDTO(payId, stId, prId, date, amount, paidAmount, balance));
+
+                new Alert(Alert.AlertType.CONFIRMATION, "Payment saved successfully!").show();
+
+            } catch (SQLException | ClassNotFoundException e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to save the payment! " + e.getMessage()).show();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                if (!existPayment(payId)) {
+                    new Alert(Alert.AlertType.ERROR, "Can't find the ID " + payId + "! Enter another one!").show();
+                    return;
+                }
+
+                paymentBO.updatePayment(new PaymentDTO(payId, stId, prId, date, amount, paidAmount, balance));
+
+                PaymentDTO selectedPayment = tbl_payment.getSelectionModel().getSelectedItem();
+                selectedPayment.setStudentId(stId);
+                selectedPayment.setProgramId(prId);
+                selectedPayment.getPaymentDate();
+                selectedPayment.setPaidAmount(amount);
+                selectedPayment.setPaidAmount(paidAmount);
+                selectedPayment.setBalance(balance);
+
+                tbl_payment.refresh();
+
+                txt_paid_amount.clear();
+
+                new Alert(Alert.AlertType.CONFIRMATION, "Student updated successfully!").show();
+
+            } catch (SQLException | ClassNotFoundException e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to update the payment! " + e.getMessage()).show();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            btnAddNew.fire();
+
+        }
+
+//        try {
+//            PaymentDTO payment = new PaymentDTO(
+//                    txt_payment_id.getText(),
+//                    cmb_student_id.getValue(),
+//                    cmb_progrm_id.getValue(),
+//                    txt_pay_date.getValue(),
+//                    Double.parseDouble(txt_amount.getText()),
+//                    Double.parseDouble(txt_paid_amount.getText()),
+//                    Double.parseDouble(btn_updateBalance.getText())
+//            );
+//
+//            paymentBO.addPayment(payment);
+//            new Alert(Alert.AlertType.CONFIRMATION, "Payment added successfully").show();
+//            loadAllPaymentsDetails();
+//            clearFields();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            new Alert(Alert.AlertType.ERROR, "Error saving payment").show();
+//        }
+    }
+
+    private boolean existPayment(String payId) throws Exception {
+        return paymentBO.existPayment(payId);
     }
 
     private void clearFields() {
@@ -253,6 +349,7 @@ public class PaymentController {
         txt_payment_id.setDisable(false);
         btn_updateBalance.setDisable(false);
         txt_pay_date.setDisable(false);
+
         txt_payment_id.clear();
         txt_payment_id.setText(generateNewId());
         cmb_student_id.setValue(null);
@@ -261,6 +358,7 @@ public class PaymentController {
         txt_prgrm_name.clear();
         txt_amount.clear();
         txt_payment_id.clear();
+
         btn_updateBalance.setText("Update Balance");
         txt_pay_date.setValue(null);
     }
@@ -281,7 +379,7 @@ public class PaymentController {
         } else {
             String pId = getLastPaymentID();
             int newPaymentID = Integer.parseInt(pId.replace("P", "")) + 1;
-            return String.format("P00-%03d", newPaymentID);
+            return String.format("P%03d", newPaymentID);
         }
     }
 

@@ -15,9 +15,11 @@ public class User {
     private String position;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Students> students = new ArrayList<>();
+    private List<Students> studentsList;
 
-    public User() {}
+    public User() {
+
+    }
 
     public User(String userID, String name, String email, String userName, String password, String position) {
         this.userID = userID;
@@ -77,11 +79,11 @@ public class User {
     }
 
     public List<Students> getStudents() {
-        return students;
+        return studentsList;
     }
 
     public void setStudents(List<Students> students) {
-        this.students = students;
+        this.studentsList = students;
     }
 
     @Override

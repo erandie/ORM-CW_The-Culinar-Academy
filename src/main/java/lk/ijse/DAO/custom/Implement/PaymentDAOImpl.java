@@ -14,17 +14,23 @@ public class PaymentDAOImpl implements PaymentDAO {
     @Override
     public boolean add(Payments entity) throws Exception {
 
-        entity.setPaymentID(UUID.randomUUID().toString());
-
         Transaction transaction = null;
 
-        try (Session session = FactoryConfiguration.getInstance().getSession()){
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
             transaction = session.beginTransaction();
+
             session.save(entity);
+
             transaction.commit();
             return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
         }
     }
+
 
     @Override
     public boolean update(Payments entity) throws Exception {
@@ -68,10 +74,11 @@ public class PaymentDAOImpl implements PaymentDAO {
     public String generateNewID() throws Exception {
         try (Session session = FactoryConfiguration.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
-            String lastID = (String) session.createQuery("SELECT MAX(paymentID) FROM Payments ").uniqueResult();
+
+            String lastID = (String) session.createQuery("SELECT MAX(paymentID) FROM Payments WHERE paymentID LIKE 'P%'").uniqueResult();
             transaction.commit();
 
-            if (lastID != null) {
+            if (lastID != null && lastID.startsWith("P")) {
                 int newID = Integer.parseInt(lastID.replace("P", "")) + 1;
                 return String.format("P%03d", newID);
             } else {

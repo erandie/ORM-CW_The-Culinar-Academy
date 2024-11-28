@@ -16,7 +16,7 @@
 <AnchorPane fx:id="root" prefHeight="801.0" prefWidth="963.0" style="-fx-background-color: white;" stylesheets="@../../../../../../../../AandCSuperMArket/src/main/resources/style/newCustomer_form.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.PaymentController">
    <children>
       <TextField fx:id="txtSearch" layoutX="710.0" layoutY="98.0" onAction="#search" opacity="0.8" prefHeight="31.0" prefWidth="167.0" promptText="Search" />
-      <JFXTextField fx:id="txt_payment_id" labelFloat="false" layoutX="132.0" layoutY="147.0" prefHeight="41.0" prefWidth="717.0" promptText="Student ID:" text="Payment Id" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txt_payment_id" labelFloat="false" layoutX="132.0" layoutY="147.0" prefHeight="41.0" prefWidth="717.0" promptText="Payment ID:" text="Payment ID:" unFocusColor="BLACK" />
       <ImageView fitHeight="31.0" fitWidth="39.0" layoutX="838.0" layoutY="98.0">
          <image>
             <Image url="@../../../../../../../../AandCSuperMArket/src/main/resources/Icon/free-search-icon-2911-thumb.png" />

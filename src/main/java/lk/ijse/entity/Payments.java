@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Table(name = "Payments")
 public class Payments {
     @Id
+    @Column(name = "paymentID", unique = true, nullable = false)
     private String paymentID;
     private String studentId;
     private String programId;
