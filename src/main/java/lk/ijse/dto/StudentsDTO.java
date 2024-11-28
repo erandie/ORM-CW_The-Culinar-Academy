@@ -1,5 +1,7 @@
 package lk.ijse.dto;
 
+import lk.ijse.entity.User;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,12 +13,25 @@ public class StudentsDTO implements Serializable
     private String stContact;
     private Date registrationDate;
     private String position;
+    private User user;
 
     @Override
     public String toString() {
         return "StudentsDTO{" +
-                "position='" + position + '\'' +
+                "user=" + user +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public StudentsDTO(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position, User user) {
+        this.user = user;
     }
 
     public String getPosition() {
