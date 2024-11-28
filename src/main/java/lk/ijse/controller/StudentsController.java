@@ -10,13 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.StudentBO;
-import lk.ijse.BO.custom.UserBO;
 import lk.ijse.DAO.custom.Implement.ProgramDAOImpl;
 import lk.ijse.DAO.custom.ProgramsDAO;
 import lk.ijse.dto.StudentsDTO;
-import lk.ijse.dto.UserDTO;
 import lk.ijse.entity.Programs;
-import lk.ijse.entity.User;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -31,7 +28,6 @@ public class StudentsController {
     @FXML
     private PasswordField txt_password;
     private final StudentBO studentBO = (StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
-    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
     private final ProgramDAOImpl programDAO = new ProgramDAOImpl();
     @FXML
     private DatePicker txt_date;
@@ -147,12 +143,6 @@ public class StudentsController {
         String position = cmb_position.getValue();
         new Date();
 
-        UserDTO userDTO = userBO.searchUser();
-
-        User user = new User();
-
-        user.setUserID();
-
         if (btn_save.getText().equalsIgnoreCase("Save")) {
             try {
                 if (exitStudent(sId)) {
@@ -160,8 +150,8 @@ public class StudentsController {
                     return;
                 }
 
-                StudentsDTO newStudent = new StudentsDTO(sId, name, address, contact, new Date(), position, user);
-                studentBO.addStudents(new StudentsDTO(sId, name, address, contact, new Date(), position, user));
+                StudentsDTO newStudent = new StudentsDTO(sId, name, address, contact, new Date(), position);
+                studentBO.addStudents(new StudentsDTO(sId, name, address, contact, new Date(), position));
                 tbl_stdnts.getItems().add(newStudent);
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Student saved successfully!").show();
@@ -309,4 +299,3 @@ public class StudentsController {
     }
 
 }
-

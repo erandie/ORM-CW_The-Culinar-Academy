@@ -26,7 +26,7 @@ public class Students {
     )
     private Set<Programs> programs = new HashSet<>();
 
-    public Students(String stID, User user1, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {}
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {}
 
     public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, User user) {
         this.stID = stID;
