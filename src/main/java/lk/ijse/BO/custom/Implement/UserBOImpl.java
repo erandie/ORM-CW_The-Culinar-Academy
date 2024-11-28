@@ -5,7 +5,9 @@ import lk.ijse.DAO.DAOFactory;
 import lk.ijse.DAO.custom.UserDAO;
 import lk.ijse.dto.UserDTO;
 import lk.ijse.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,4 +85,17 @@ public class UserBOImpl implements UserBO {
     public String generateNew_UserID() throws Exception {
         return userDAO.generateNewID();
     }
+
+    @Override
+    public boolean checkCredentials(String userName, String password) {
+        // Get the stored password hash from the database
+        String storedHash = userDAO.getPasswordHashByUserId(userName);
+        if (storedHash == null) {
+            return false; // User not found
+        }
+
+        // Check if the entered password matches the stored hash
+        return BCrypt.checkpw(password, storedHash);
+    }
+
 }

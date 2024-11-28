@@ -4,13 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.UserBO;
 import lk.ijse.dto.UserDTO;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,7 +25,7 @@ import java.util.List;
 public class UserController {
 
     @FXML private TextField txt_id, txt_name, txt_email, txt_U_Name, txt_password, txt_Search;
-    @FXML private Button btn_save, btn_update, btn_delete, btn_getAll, btn_search, btnAddNew;
+    @FXML private Button btn_save, btn_update, btn_delete, btn_getAll, btn_search, btnAddNew, btn_login;
     @FXML private TableView<UserDTO> tbl_users;
     @FXML private ComboBox<String> txt_position;
 
@@ -248,4 +254,17 @@ public class UserController {
 
         return tempUserList.get(tempUserList.size() - 1).getUserID();
     }
+
+    public void login(ActionEvent actionEvent) {
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            stage.setScene(new Scene(parent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

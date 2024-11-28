@@ -11,4 +11,5 @@ module ORM.Coursework.The.Culinary.Academy {
     opens lk.ijse.entity;
     opens lk.ijse.dto;
     opens lk.ijse.controller to javafx.fxml;
+
 }

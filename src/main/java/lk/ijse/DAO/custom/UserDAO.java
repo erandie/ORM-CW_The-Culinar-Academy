@@ -6,4 +6,6 @@ import lk.ijse.entity.User;
 
 public interface UserDAO extends CrudDAO<User> {
 
+    String getPasswordHashByUserId(String userId);
+
 }

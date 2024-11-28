@@ -8,23 +8,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.LoginFormController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.LoginFormController">
    <children>
-      <TextField fx:id="txt_userName" layoutX="215.0" layoutY="89.0" promptText="UserName" />
-      <Button fx:id="btn_login" layoutX="324.0" layoutY="188.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Button fx:id="btn_register" layoutX="227.0" layoutY="188.0" mnemonicParsing="false" onAction="#register" text="Register" />
-      <PasswordField fx:id="txt_password" layoutX="215.0" layoutY="134.0" promptText="Password" />
-      <Label layoutX="246.0" layoutY="30.0" text="Login">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-      </Label>
-      <Label layoutX="213.0" layoutY="243.0" text="Fogot password?">
-         <font>
-            <Font size="12.0" />
-         </font>
-      </Label>
-      <Hyperlink fx:id="hy_click" layoutX="324.0" layoutY="240.0" onAction="#click" text="CLICK HERE" />
+      <AnchorPane layoutX="122.0" layoutY="31.0" prefHeight="293.0" prefWidth="368.0" style="-fx-background-color: gray;">
+         <children>
+            <TextField fx:id="txt_userName" layoutX="95.0" layoutY="89.0" promptText="UserName" />
+            <Button fx:id="btn_login" layoutX="204.0" layoutY="188.0" mnemonicParsing="false" onAction="#login" text="Login" />
+            <Button fx:id="btn_register" layoutX="107.0" layoutY="188.0" mnemonicParsing="false" onAction="#register" text="Register" />
+            <PasswordField fx:id="txt_password" layoutX="95.0" layoutY="134.0" promptText="Password" />
+            <Label layoutX="126.0" layoutY="30.0" text="Login">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="93.0" layoutY="243.0" text="Fogot password?">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="hy_click" layoutX="204.0" layoutY="240.0" onAction="#click" text="CLICK HERE" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

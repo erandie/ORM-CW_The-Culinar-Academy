@@ -96,4 +96,18 @@ public class UserDAOImpl implements UserDAO {
             throw new Exception("Failed to check existence of the student with ID: " + id, e);
         }
     }
+
+    @Override
+    public String getPasswordHashByUserId(String userName) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "SELECT u.password FROM User u WHERE u.userName = :userName";
+            Query<String> query = session.createQuery(hql, String.class);
+            query.setParameter("userName", userName); // Ensure consistency here
+            return query.uniqueResult();
+        } catch (Exception e) {
+            System.err.println("Error fetching password hash: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

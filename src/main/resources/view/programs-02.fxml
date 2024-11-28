@@ -39,5 +39,10 @@
                 <Font size="26.0" />
             </font>
         </Label>
+      <ImageView fitHeight="107.0" fitWidth="119.0" layoutX="278.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/cheff-04.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
