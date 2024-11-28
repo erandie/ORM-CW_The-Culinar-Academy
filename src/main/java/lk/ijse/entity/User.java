@@ -1,16 +1,12 @@
 package lk.ijse.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Id;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class User {
-
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userID;
     private String name;
     private String email;
@@ -21,17 +17,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Students> students = new ArrayList<>();
 
-    public List<Students> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Students> students) {
-        this.students = students;
-    }
-
-    public User(String admin, String password, String s) {
-
-    }
+    public User() {}
 
     public User(String userID, String name, String email, String userName, String password, String position) {
         this.userID = userID;
@@ -40,10 +26,6 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.position = position;
-    }
-
-    public User() {
-
     }
 
     public String getUserID() {
@@ -92,6 +74,14 @@ public class User {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public List<Students> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Students> students) {
+        this.students = students;
     }
 
     @Override

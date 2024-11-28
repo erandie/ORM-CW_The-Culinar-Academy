@@ -1,9 +1,9 @@
 package lk.ijse.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Students {
@@ -11,35 +11,31 @@ public class Students {
     private String stID;
     private String stFullName;
     private String stAddress;
-
-    @Override
-    public String toString() {
-        return "Students{" +
-                "programs=" + programs +
-                '}';
-    }
-
-    public List<Programs> getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(List<Programs> programs) {
-        this.programs = programs;
-    }
-
-    public Students(List<Programs> programs) {
-        this.programs = programs;
-    }
-
     private String stContact;
     private Date registrationDate;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userID", nullable = false)
     private User user;
 
-    @ManyToMany(mappedBy = "students")
-    private List<Programs> programs;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_program",
+            joinColumns = @JoinColumn(name = "stID"),
+            inverseJoinColumns = @JoinColumn(name = "programID")
+    )
+    private Set<Programs> programs = new HashSet<>();
+
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {}
+
+    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, User user) {
+        this.stID = stID;
+        this.stFullName = stFullName;
+        this.stAddress = stAddress;
+        this.stContact = stContact;
+        this.registrationDate = registrationDate;
+        this.user = user;
+    }
 
     public Students() {
 
@@ -93,15 +89,23 @@ public class Students {
         this.user = user;
     }
 
-    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, String position) {
+    public Set<Programs> getPrograms() {
+        return programs;
     }
 
-    public Students(String stID, String stFullName, String stAddress, String stContact, Date registrationDate, User user) {
-        this.stID = stID;
-        this.stFullName = stFullName;
-        this.stAddress = stAddress;
-        this.stContact = stContact;
-        this.registrationDate = registrationDate;
-        this.user = user;
+    public void setPrograms(Set<Programs> programs) {
+        this.programs = programs;
+    }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "stID='" + stID + '\'' +
+                ", stFullName='" + stFullName + '\'' +
+                ", stAddress='" + stAddress + '\'' +
+                ", stContact='" + stContact + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", user=" + user +
+                '}';
     }
 }
