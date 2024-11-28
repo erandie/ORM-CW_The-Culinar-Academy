@@ -76,6 +76,8 @@ public class PaymentController {
         loadComboBoxes();
         setupTableColumns();
         loadAllPaymentsDetails();
+        generatePaymentId();
+
 
         cmb_student_id.setOnAction(this::load_student);
         cmb_progrm_id.setOnAction(this::load_program);
@@ -361,26 +363,31 @@ public class PaymentController {
 
         btn_updateBalance.setText("Update Balance");
         txt_pay_date.setValue(null);
+        generatePaymentId();
     }
 
     private String generateNewId() {
+        return null;
+    }
+
+    private String generatePaymentId() {
         try {
-            return paymentBO.generateNew_PaymentID();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "failed to generate a new id!!");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            String currentId = paymentBO.getCurrentId();
+            if (currentId != null) {
+                String[] split = currentId.split("P00");
+                int idNum = Integer.parseInt(split[1]);
+                String availableId = "P00" + ++idNum;
+                txt_payment_id.setText(availableId);
+                return availableId;
+            } else {
+                txt_payment_id.setText("P001");
+                return "P001";
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
-        if (tbl_payment.getItems().isEmpty()) {
-            return "P001";
-        } else {
-            String pId = getLastPaymentID();
-            int newPaymentID = Integer.parseInt(pId.replace("P", "")) + 1;
-            return String.format("P%03d", newPaymentID);
-        }
+        return null;
     }
 
     private String getLastPaymentID() {

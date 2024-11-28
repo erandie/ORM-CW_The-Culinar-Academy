@@ -12,6 +12,8 @@ import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.StudentBO;
 import lk.ijse.DAO.custom.Implement.ProgramDAOImpl;
 import lk.ijse.DAO.custom.ProgramsDAO;
+import lk.ijse.Util.Regex;
+import lk.ijse.Util.TextFields;
 import lk.ijse.dto.StudentsDTO;
 import lk.ijse.entity.Programs;
 
@@ -291,11 +293,14 @@ public class StudentsController {
     }
 
     public void txtCustomerNAmeOnKeyReleased(KeyEvent keyEvent) {
-
+        Regex.setTextColor(TextFields.Name,txt_name);
     }
 
     public void txtCustomerContactOnKeyReleased(KeyEvent keyEvent) {
-
+        Regex.setTextColor(TextFields.Contact,txt_contact);
     }
 
+    public void txtCustomerAddresssOnKeyReleased(KeyEvent keyEvent) {
+
+    }
 }

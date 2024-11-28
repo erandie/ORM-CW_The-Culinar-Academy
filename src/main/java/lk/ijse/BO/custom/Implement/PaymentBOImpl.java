@@ -88,4 +88,15 @@ public class PaymentBOImpl implements PaymentBO {
     public boolean existPayment(String payId) throws Exception {
         return paymentDAO.exist(payId);
     }
+
+    @Override
+    public String getCurrentId() {
+        return paymentDAO.getCurrentId();
+    }
+
+    @Override
+    public List<String> getIds() {
+        return paymentDAO.getIds();
+    }
+
 }

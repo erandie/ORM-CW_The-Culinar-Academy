@@ -36,7 +36,7 @@
          </columns>
       </TableView>
       <JFXTextField fx:id="txt_name" labelFloat="false" layoutX="132.0" layoutY="216.0" onKeyReleased="#txtCustomerNAmeOnKeyReleased" prefHeight="41.0" prefWidth="347.0" promptText="Student Name:" text="Student's Full Name" unFocusColor="BLACK" />
-      <JFXTextField fx:id="txt_address" labelFloat="false" layoutX="132.0" layoutY="283.0" prefHeight="41.0" prefWidth="347.0" promptText="Student Address:" text="Student Address" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txt_address" labelFloat="false" layoutX="132.0" layoutY="283.0" onKeyReleased="#txtCustomerAddresssOnKeyReleased" prefHeight="41.0" prefWidth="347.0" promptText="Student Address:" text="Student Address" unFocusColor="BLACK" />
       <JFXTextField fx:id="txt_contact" labelFloat="false" layoutX="132.0" layoutY="351.0" onKeyReleased="#txtCustomerContactOnKeyReleased" prefHeight="41.0" prefWidth="347.0" promptText="Contact Details" text="Contact Details" unFocusColor="BLACK" />
       <JFXButton fx:id="btn_save" buttonType="RAISED" layoutX="365.0" layoutY="435.0" onAction="#save" prefHeight="24.0" prefWidth="119.0" text="Save" />
       <JFXButton fx:id="btnAddNew" layoutX="687.0" layoutY="94.0" onAction="#btnAddNew_OnAction" text="+AddNew" />

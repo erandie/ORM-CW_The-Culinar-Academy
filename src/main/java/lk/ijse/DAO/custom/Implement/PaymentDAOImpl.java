@@ -101,4 +101,26 @@ public class PaymentDAOImpl implements PaymentDAO {
             throw new Exception("Failed to check existence of the payment with ID: " + id, e);
         }
     }
+
+    @Override
+    public List<String> getIds() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery(" select paymentID from Payments ");
+        List<String> list = query.getResultList();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Override
+    public String getCurrentId() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("select paymentID from Payments order by paymentID desc limit 1");
+        String id = (String) query.uniqueResult();
+        transaction.commit();
+        session.close();
+        return id;
+    }
 }
