@@ -45,5 +45,10 @@
       <JFXTextField fx:id="txt_password" labelFloat="false" layoutX="548.0" layoutY="222.0" prefHeight="41.0" prefWidth="319.0" promptText="Password:" text="Password" unFocusColor="BLACK" />
       <JFXComboBox fx:id="txt_position" layoutX="548.0" layoutY="295.0" prefHeight="41.0" prefWidth="319.0" promptText="Position" />
       <JFXButton fx:id="btn_login" buttonType="RAISED" layoutX="78.0" layoutY="742.0" onAction="#login" prefHeight="31.0" prefWidth="119.0" text="&lt;&lt;Login" />
+      <ImageView fitHeight="112.0" fitWidth="119.0" layoutX="312.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/cheff-08.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

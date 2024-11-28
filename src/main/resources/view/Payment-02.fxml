@@ -49,5 +49,10 @@
       <JFXComboBox fx:id="cmb_progrm_id" layoutX="132.0" layoutY="283.0" onAction="#load_program" prefHeight="41.0" prefWidth="322.0" promptText="Program ID:" />
       <JFXTextField fx:id="txt_amount" labelFloat="false" layoutX="127.0" layoutY="353.0" onKeyReleased="#txtCustomerContactOnKeyReleased" prefHeight="41.0" prefWidth="322.0" promptText="Full Amount:" text="Course Fee:" unFocusColor="BLACK" />
       <JFXButton fx:id="btn_save" buttonType="RAISED" layoutX="379.0" layoutY="494.0" onAction="#save" prefHeight="24.0" prefWidth="119.0" text="Save" />
+      <ImageView fitHeight="191.0" fitWidth="138.0" layoutX="310.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/cheff-03.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
